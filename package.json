@@ -2,7 +2,6 @@
   "name": "easy2wiki-server",
   "description": "easy2wiki server",
   "version": "0.0.1",
-  "private": true,
   "dependencies": {
     "express": "4.x",
     "express-session": "1.2.x",
@@ -16,5 +15,9 @@
 		"fs-extra": "0.9.x",
 		"async": "0.9.x",
     "html-escape": "1.0.x"
+  },
+  "author": {
+    "name": "jhen",
+    "email": "jhen@jhen.me"
   }
 }
