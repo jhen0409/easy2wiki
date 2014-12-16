@@ -1,0 +1,9 @@
+**/*.DS_Store
+node_modules/
+bower_components/
+dump.rdb
+.sass-cache/
+public/
+config.json
+test/
+

@@ -1,0 +1,227 @@
+<!doctype html>
+<html ng-app="wikiproject">
+	<head>
+		<meta charset="UTF-8">
+		<title><%= wiki_name %> - New Article</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+		<link href="css/docs.css" rel="stylesheet">
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/angular-strap.js"></script>
+
+		<script type="text/javascript" src="js/epiceditor.min.js"></script>
+		<script type="text/javascript" src="js/marked.js"></script>
+
+		<script type="text/javascript" src="js/ng_main.js"></script>
+		<script type="text/javascript" src="js/item_new_ng_main.js"></script>
+		<style type="text/css">
+			.epiceditors { 
+				border:1px solid #000;
+				box-shadow: rgba(0, 0, 0, 0.75) 0 2px 5px;
+				border-radius: 3px;
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div ng-controller="item_new">
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						</button>
+						<a class="brand" href="./index.html"><%= wiki_name %></a>
+						<div class="navbar-text pull-right">
+							<input type="text" ng-model="searchText" class="input-medium search-query" placeholder="Search article..." ng-enter="searchArticle()">
+							<button class="btn" ng-click="searchArticle()" style="margin-top: 0px;"><i class="icon-search"></i></button>
+								 <a href="{{ !managerSession ? '/login.html' : '#' }}">{{ managerSession ? 'manager': 'guest' }}</a>
+								 <a ng-show="managerSession" href="#" ng-click="logout()">logout</a>
+						</div>
+						<div class="nav-collapse collapse">
+							<ul class="nav">
+								<li><a href="./index.html">Home</a></li>
+								<li><a href="./item_list.html">Article</a></li>
+								<li><a href="./category_list.html">Category</a></li>
+								<!-- manager session -->
+								<li ng-show="managerSession" class="">
+									<a href="./category_new.html">new Category</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+	    </div>
+
+			<header class="jumbotron subhead" id="overview">
+				<div class="container">
+					<h1>New Article</h1>
+					<p class="lead">
+						新增一個條目，使用 Markdown 格式。(詳見 <a href="https://help.github.com/articles/github-flavored-markdown" target="_blank">GitHub Flavored Markdown</a>)
+					</p>
+				</div>
+			</header>
+
+			<div class="container">
+				<div class="row">
+
+						<div class="span3" style="float: right;">
+							<div style="margin-top: 30px"><h1>目錄</h1></div>
+							<ul class="nav nav-list bs-docs-sidenav">
+
+								<li ng-repeat="item in items">
+									<a>
+										<i ng-show="item.type == 1" class="icon-chevron-right"></i>
+										 {{ item.ind }}{{ item.type == 1 ? "-" + item.subInd : ""}}.
+										 <i ng-click="delItem($index)" class="icon-minus"></i>
+										 {{ item.val }}
+									</a>
+								</li>
+								
+								<li>
+									<a>
+										<button class="btn addsubitem_text" data-toggle="button" title="子標題">
+											<i class="icon-chevron-right"></i>
+										</button> 
+										<input ng-model="new_item_name" type="text" class="additem_text" placeholder="Add item..." />
+										<span ng-click="addItem(new_item_name)">
+											<i class="icon-plus"></i>
+										</span>
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="span9" style="float: left;">
+						<section id="item_new_content">
+							<div id="new_item_head" class="page-header">
+								<h1>條目名稱 <input type="text" ng-model="articleName" ng-change="newArticleChange()" placeholder="請輸入條目名稱..."></h1>
+								<div ng-show="messageErrorNameIsOpen" class="alert alert-error">
+    							<b>錯誤！</b> {{ messageErrorName }}
+    						</div>
+    						<div ng-show="messageSuccessNameIsOpen" class="alert alert-success">
+									<b> {{ messageSuccessName }} </b>
+								</div>
+							</div>
+
+							<div class="epiceditors">
+								<div id="epiceditor"></div>
+							</div>
+							
+							<script>
+								var markedOpts = {
+									gfm: true,
+									tables: true,
+									breaks: false,
+									pedantic: false,
+									sanitize: true,
+									smartLists: true,
+									smartypants: false,
+								};
+								var epicOpts = {
+									container: 'epiceditor',
+									textarea: null,
+									basePath: 'epiceditor',
+									clientSideStorage: false,
+									localStorageName: 'epiceditor',
+									useNativeFullscreen: true,
+									parser: marked,
+									file: {
+										name: 'epiceditor',
+										defaultContent: editorDefaultContent,
+										autoSave: 100
+									},
+									theme: {
+										base: '/themes/base/epiceditor.css',
+										preview: '/themes/preview/github.css',
+									 	editor: '/themes/editor/epic-dark.css'
+									},
+									button: {
+										preview: true,
+										fullscreen: true,
+										bar: "auto"
+									},
+									focusOnLoad: false,
+									shortcut: {
+										modifier: 18,
+										fullscreen: 70,
+										preview: 80
+									},
+									string: {
+										togglePreview: 'Toggle Preview Mode',
+										toggleEdit: 'Toggle Edit Mode',
+										toggleFullscreen: 'Enter Fullscreen'
+									},
+									autogrow: {
+										minHeight: 600,
+										maxHeight: 700
+									}
+								}
+
+								marked.setOptions(markedOpts);
+								var editor = new EpicEditor(epicOpts).load();
+
+								editor.edit();
+
+							</script>
+
+							<hr>
+
+							<div style="text-align: right;">
+								小提醒：編輯器右下角可選擇預覽及全螢幕編輯
+							</div>
+
+							<div class="page-header">
+								<h1>摘要</h1>
+								<div ng-show="messageErrorAbstractIsOpen" class="alert alert-error">
+									<b>錯誤！</b> {{ messageAbstract }}
+								</div>
+								<textarea ng-model="abstract" style="width: 100%;" placeholder="請輸入摘要..."></textarea>
+							</div>
+							
+							<div>
+								Category: 
+								<input id="ctg_search" type="text" class="input-medium search-query" style="margin: 0 auto;" placeholder="Search..." ng-model="categoryTypeahead" bs-typeahead="categoryTah">
+							</div>
+							
+					    <div class="btn-group" style="margin-top: 20px;">
+								<button ng-click="deleteCategory(cate)" ng-repeat="cate in categorys" class="btn">
+									{{ cate.name }} <i class="icon-minus"></i>
+								</button>
+							</div>
+
+							<hr>
+							
+							<div ng-show="messageErrorSendIsOpen" class="alert alert-error">
+    							<b>錯誤！</b> {{ messageErrorSend }}
+    						</div>
+    						<div ng-show="messageSuccessSendIsOpen" class="alert alert-success">
+									<b> {{ messageSuccessSend }} </b>
+								</div>
+
+							<div style="float:right;">
+								<button class="btn btn-large btn-success" ng-click="sendNewArticle()">確定送出</button>
+								<!-- <button class="btn btn-large btn-primary">完整預覽</button> -->
+								<button class="btn btn-large btn-danger" ng-click="resetArticle()">清除</button>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+			
+			<footer class="footer">
+				<div class="container">
+					powered by Easy2Wiki<br>
+					<% if (license == 1) { %>
+						<a href="https://creativecommons.org/licenses/by-sa/3.0/tw/">CC-BY-SA</a>
+					<% } %>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

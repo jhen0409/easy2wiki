@@ -1,0 +1,111 @@
+<!doctype html>
+<html ng-app="wikiproject">
+	<head>
+		<meta charset="UTF-8">
+		<title><%= wiki_name %> - Article diff</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/docs.css" >
+		<link rel="stylesheet" type="text/css" href="css/diffview.css" />
+
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/angular.min.js"></script>
+		<script type="text/javascript" src="js/angular-strap.js"></script>
+
+		<script type="text/javascript" src="js/diffview.js"></script>
+		<script type="text/javascript" src="js/difflib.js"></script>
+		<script type="text/javascript" src="js/difflib_main.js"></script>
+		<script type="text/javascript" src="js/encoder.js"></script>
+
+		<script type="text/javascript" src="js/ng_main.js"></script>
+		<script type="text/javascript" src="js/item_diff_ng_main.js"></script>
+		<style type="text/css">
+			.epiceditors { 
+				border:1px solid #000;
+				box-shadow: rgba(0, 0, 0, 0.75) 0 2px 5px;
+				border-radius: 3px;
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div ng-controller="item_diff">
+			<div class="navbar navbar-inverse navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						  <span class="icon-bar"></span>
+						</button>
+						<a class="brand" href="./index.html"><%= wiki_name %></a>
+						<div class="navbar-text pull-right">
+								<input type="text" ng-model="searchText" class="input-medium search-query" placeholder="Search article..." ng-enter="searchArticle()">
+								<button class="btn" ng-click="searchArticle()" style="margin-top: 0px;"><i class="icon-search"></i></button>
+								 <a href="{{ !managerSession ? '/login.html' : '#' }}">{{ managerSession ? 'manager': 'guest' }}</a>
+								 <a ng-show="managerSession" href="#" ng-click="logout()">logout</a>
+								 
+							</div>
+						<div class="nav-collapse collapse">
+							<ul class="nav">
+								<li><a href="./index.html">Home</a></li>
+								<li><a href="./item_list.html">Article</a></li>
+								<li><a href="./category_list.html">Category</a></li>
+								<!-- manager session -->
+								<li ng-show="managerSession" class="">
+									<a href="./category_new.html">new Category</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+	    </div>
+
+			<header class="jumbotron subhead" id="overview">
+				<div class="container">
+					<h1>Article diff</h1>
+					<p class="lead"></p>
+				</div>
+			</header>
+
+			<div class="container">
+				<div class="row">
+
+						<div class="span12">
+						<section id="item_new_content">
+							<div id="new_item_head" class="page-header">
+								<h1>條目名稱：{{ articleName }}</h1>
+							</div>
+
+							<div style="text-align: right;">
+								<div class="btn-group">
+									<button class="btn" ng-click="redirectToPage('item_view.html?aid=' + aid)"><i class="icon-time"></i> 最新內容</button>
+									<button class="btn" ng-click="redirectToPage('item_view.html?mrid=' + mrid)"><i class="icon-time"></i> 修訂記錄內容</button>
+									<button class="btn" ng-click="redirectToPage('item_modify_record.html?aid=' + aid)"><i class="icon-time"></i> 修訂記錄</button>
+								</div>
+							</div>
+
+							<div id="article_diff"></div>
+							<hr>
+							<div class="page-header">
+								<h1>摘要</h1>
+							</div>
+							<div id="abstract_diff"></div>
+						</section>
+					</div>
+				</div>
+			</div>
+			
+			<footer class="footer">
+				<div class="container">
+					powered by Easy2Wiki<br>
+					<% if (license == 1) { %>
+						<a href="https://creativecommons.org/licenses/by-sa/3.0/tw/">CC-BY-SA</a>
+					<% } %>
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>
