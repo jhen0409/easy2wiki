@@ -6,6 +6,7 @@ Easy2Wiki
 Install: (open config page)
 
 ```
+npm install
 node setup.js		
 ```
 
