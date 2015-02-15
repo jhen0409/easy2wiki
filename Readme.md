@@ -3,7 +3,7 @@ Easy2Wiki
 
 使用 Node.js 寫成的一個簡易 Wiki Framework, 使用 MySQL 作為 Database, Redis 作為 Session store
 
-Install: (open config page)
+### Install: (open config page)
 
 ```
 npm install
@@ -22,6 +22,7 @@ node app.js
 
 ### TODO
 
-1. support PostgreSQL, MongoDB
-2. support cluster
-3. ...
+1. porting to io.js, use koa
+2. setup.js 做成 npm cli tool
+3. support PostgreSQL, MongoDB
+4. support cluster
