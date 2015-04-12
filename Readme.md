@@ -24,5 +24,5 @@ node app.js
 
 1. porting to io.js, use koa
 2. setup.js 做成 npm cli tool
-3. support PostgreSQL, MongoDB
-4. support cluster
+3. support Postgres, SQLite, MSSQL (use Sequelize)
+4. search 優化(use ElasticSearch)
