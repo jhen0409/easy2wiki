@@ -22,9 +22,11 @@ node app.js
 
 ### TODO
 
-1. replace web framework (use koa)
-2. npm global comand run setup.js
-3. support Postgres, SQLite, MSSQL (use Sequelize)
-4. search optimization (use ElasticSearch)
-5. rewrite all code with LiveScript
-6. rewrite front-end logic with React.js
+1. NPM global comand run setup.js
+2. Rewrite all code with LiveScript
+3. Rewrite front-end logic with React.js
+4. Replace web framework (use koa)
+5. Support Postgres, SQLite, MSSQL (use Sequelize)
+6. Search optimization (use ElasticSearch)
+7. Write testing
+8. Integrate Travis CI
