@@ -1,7 +1,14 @@
 {
-  "name": "easy2wiki-server",
-  "description": "easy2wiki server",
+  "name": "easy2wiki",
+  "description": "The simple Wiki framework.",
   "version": "0.0.1",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/jhen0409/mybigday-weixin-mp.git"
+  },
+  "license": "MIT",
+  "author": "Jhen <developer@jhen.me>",
   "dependencies": {
     "express": "4.x",
     "express-session": "1.2.x",
@@ -12,13 +19,8 @@
     "mysql": "2.3.x",
     "open": "0.0.x",
     "ejs": "1.0.x",
-		"fs-extra": "0.9.x",
+    "fs-extra": "0.9.x",
     "async": "0.9.x",
     "html-escape": "1.0.x"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "jhen",
-    "email": "jhen@jhen.me"
   }
 }
