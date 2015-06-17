@@ -22,7 +22,9 @@ node app.js
 
 ### TODO
 
-1. porting to io.js, use koa
-2. setup.js 做成 npm cli tool
+1. replace web framework (use koa)
+2. npm global comand run setup.js
 3. support Postgres, SQLite, MSSQL (use Sequelize)
-4. search 優化(use ElasticSearch)
+4. search optimization (use ElasticSearch)
+5. rewrite all code with LiveScript
+6. rewrite front-end logic with React.js
