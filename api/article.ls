@@ -33,7 +33,7 @@ module.exports = (app, mariaPool) ->
     case \query
       # 查詢前 n 筆資料
       sql = '
-        SELECT aid, name, abstract, pid, is_manager,  timestamp 
+        SELECT aid, name, abstract, pid, is_manager, timestamp 
         FROM article ORDER BY timestamp DESC LIMIT ?,?;
       '
 
@@ -141,7 +141,7 @@ module.exports = (app, mariaPool) ->
         # 新增修訂記錄
         sql = 'INSERT INTO article_modifying_record VALUES(NULL, ?, ?, ?, ?, ?, ?, ?);'
 
-        (err, rows, fields) <- mariaPool.query sql, [aid, 'Create.', abstract, content, pid, isManager, timestamp]
+        (err, rows, fields) <- mariaPool.query sql, [aid, \Create., abstract, content, pid, isManager, timestamp]
         throw err if err
 
         if ctids.length
@@ -197,7 +197,7 @@ module.exports = (app, mariaPool) ->
     case \query_aid
       # 以 aid 查詢
       sql = '
-      	SELECT mrid,abstract,comment,pid,is_manager,timestamp 
+      	SELECT mrid, abstract, comment, pid, is_manager, timestamp 
         FROM article_modifying_record WHERE aid=?;
       '
 
@@ -320,7 +320,7 @@ module.exports = (app, mariaPool) ->
       resp.fail res, {}
 
   app.get \/api/article/discuss, (req, res) ->
-    #reqLoad(mariaPool, req, res, function() {
+    #reqLoad mariaPool, req, res, ->
     type = req.query.t;
 
     switch type

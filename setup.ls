@@ -1,5 +1,6 @@
 require! {
   \fs-extra : fs
+  child_process
   open
   express
   \body-parser
@@ -25,7 +26,12 @@ templates = [
   \category_new
 ]
 
-function convertTemplates opts, cb
+function convert-ls-files path, cb
+  child_process.exec "#{__dirname}/node_modules/livescript/bin/lsc -b -c #{path}", (err, stdout, stderr) ->
+    throw err if err
+    cb!
+
+function convert-templates opts, cb
   tdir = __dirname + \/setup/template
   dir = __dirname + \/public
 
@@ -145,6 +151,9 @@ fs.exists configFile, (exists) ->
     delete opts.manager_username
     delete opts.manager_password
     delete opts.manager_name
+
+    <- convert-ls-files \public/js/*.ls
+    fs.remove \public/js/*.ls
 
     outputConfig opts
     res.json status: 100
