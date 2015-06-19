@@ -2,7 +2,10 @@
   "name": "easy2wiki",
   "description": "The simple Wiki framework.",
   "version": "0.0.1",
-  "scripts": {},
+  "scripts": {
+    "setup": "./node_modules/livescript/bin/lsc setup.ls",
+    "start": "./node_modules/livescript/bin/lsc app.ls"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@bitbucket.org/jhen0409/mybigday-weixin-mp.git"
@@ -22,5 +25,8 @@
     "fs-extra": "0.9.x",
     "async": "0.9.x",
     "html-escape": "1.0.x"
+  },
+  "devDependencies": {
+    "livescript": "^1.4.0"
   }
 }

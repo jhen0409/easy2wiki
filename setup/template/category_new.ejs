@@ -1,97 +1,93 @@
 <!doctype html>
-<html ng-app="wikiproject">
-	<head>
-		<meta charset="UTF-8">
-		<title><%= wiki_name %> - New category</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
-		<link href="css/docs.css" rel="stylesheet">
+<html ng-app="easy2wiki">
+  <head>
+    <meta charset="UTF-8">
+    <title><%= wiki_name %> - New category</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="vendor/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" rel="stylesheet" />
 
-		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
-		<script type="text/javascript" src="js/angular-strap.js"></script>
+    <script type="text/javascript" src="vendor/js/jquery.js"></script>
+    <script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/js/angular.min.js"></script>
+    <script type="text/javascript" src="vendor/js/angular-strap.js"></script>
+    <script type="text/javascript" src="js/ng_main.js"></script>
+    <script type="text/javascript" src="js/category_new_ng_main.js"></script>
+  </head>
+  <body>
+    <div ng-controller="category_new">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="./index.html"><%= wiki_name %></a>
+            <div class="navbar-text pull-right">
+              <input type="text" ng-model="searchText" class="input-medium search-query" placeholder="Search article..." ng-enter="searchArticle()">
+              <button class="btn" ng-click="searchArticle()" style="margin-top: 0px;"><i class="icon-search"></i></button>
+               <a href="{{ !managerSession ? '/login.html' : '#' }}">{{ managerSession ? 'manager': 'guest' }}</a>
+               <a ng-show="managerSession" href="#" ng-click="logout()">logout</a>
+            </div>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./item_list.html">Article</a></li>
+                <li><a href="./category_list.html">Category</a></li>
+                <!-- manager session -->
+                <li ng-show="managerSession" class="">
+                  <a href="./category_new.html">new Category</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-		<script type="text/javascript" src="js/ng_main.js"></script>
-		<script type="text/javascript" src="js/category_new_ng_main.js"></script>
-	</head>
-	<body>
-		<div ng-controller="category_new">
-			<div class="navbar navbar-inverse navbar-fixed-top">
-				<div class="navbar-inner">
-					<div class="container">
-						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						  <span class="icon-bar"></span>
-						  <span class="icon-bar"></span>
-						  <span class="icon-bar"></span>
-						</button>
-						<a class="brand" href="./index.html"><%= wiki_name %></a>
-						<div class="navbar-text pull-right">
-							<input type="text" ng-model="searchText" class="input-medium search-query" placeholder="Search article..." ng-enter="searchArticle()">
-							<button class="btn" ng-click="searchArticle()" style="margin-top: 0px;"><i class="icon-search"></i></button>
-							 <a href="{{ !managerSession ? '/login.html' : '#' }}">{{ managerSession ? 'manager': 'guest' }}</a>
-							 <a ng-show="managerSession" href="#" ng-click="logout()">logout</a>
-						</div>
-						<div class="nav-collapse collapse">
-							<ul class="nav">
-								<li><a href="./index.html">Home</a></li>
-								<li><a href="./item_list.html">Article</a></li>
-								<li><a href="./category_list.html">Category</a></li>
-								<!-- manager session -->
-								<li ng-show="managerSession" class="">
-									<a href="./category_new.html">new Category</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-	    </div>
+      <header class="jumbotron subhead" id="overview">
+        <div class="container">
+          <h1>new Category</h1>
+          <p class="lead"></p>
+        </div>
+      </header>
 
-	    <header class="jumbotron subhead" id="overview">
-				<div class="container">
-					<h1>new Category</h1>
-					<p class="lead"></p>
-				</div>
-			</header>
+      <div class="container">
+        <div class="row">
+          <div class="span12" style="margin:0 auto; float:none;">
+            <section id="content">
+              <div class="well">
+                <p>
+                  <h4>name</h4>
+                  <input type="text" ng-model="name" ng-change="newCategoryChange()">
+                </p>
 
-			<div class="container">
-				<div class="row">
-					<div class="span12" style="margin:0 auto; float:none;">
-						<section id="content">
-							
-							<div class="well" >
-								
-								<p>
-									<h4>name</h4>
-									<input type="text" ng-model="name" ng-change="newCategoryChange()">
-								</p>
+                <div ng-show="messageErrorNameExist" class="alert alert-error">
+                  <b>錯誤！名稱已重複</b>
+                </div>
 
-								<div ng-show="messageErrorNameExist" class="alert alert-error">
-    							<b>錯誤！名稱已重複</b>
-    						</div>
+                <p>
+                  <h4>abstract</h4>
+                  <input type="text" ng-model="abstract" class="input-xxlarge">
+                </p>
 
-								<p>
-									<h4>abstract</h4>
-									<input type="text" ng-model="abstract" class="input-xxlarge">
-								</p>
+                <button class="btn btn-primary" ng-click="newCategory()">確定</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
 
-								<button class="btn btn-primary" ng-click="newCategory()">確定</button>
-							</div>
-
-						</section>
-					</div>
-				</div>
-			</div>
-
-			<footer class="footer">
-				<div class="container">
-					powered by Easy2Wiki<br>
-					<% if (license == 1) { %>
-						<a href="https://creativecommons.org/licenses/by-sa/3.0/tw/">CC-BY-SA</a>
-					<% } %>
-				</div>
-			</footer>
-		</div>
-	</body>
+      <footer class="footer">
+        <div class="container">
+          powered by Easy2Wiki<br>
+          <% if (license == 1) { %>
+            <a href="https://creativecommons.org/licenses/by-sa/3.0/tw/">CC-BY-SA</a>
+          <% } %>
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>

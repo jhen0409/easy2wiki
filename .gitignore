@@ -6,4 +6,4 @@ dump.rdb
 public/
 config.json
 test/
-
+npm-debug.log

@@ -1,228 +1,228 @@
 <!doctype html>
-<html ng-app="wikiproject">
-	<head>
-		<meta charset="UTF-8">
-		<title>Easy2Wiki Setup</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
-		<link href="css/docs.css" rel="stylesheet">
-		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
-		<script type="text/javascript" src="js/angular-strap.js"></script>
+<html ng-app="easy2wiki">
+  <head>
+    <meta charset="UTF-8">
+    <title>Easy2Wiki Setup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="vendor/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" rel="stylesheet" />
+    
+    <script type="text/javascript" src="vendor/js/jquery.js"></script>
+    <script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/js/angular.min.js"></script>
+    <script type="text/javascript" src="vendor/js/angular-strap.js"></script>
+    <script type="text/javascript" src="vendor/js/encoder.js"></script>
+    <script type="text/javascript" src="js/e2w_setup_ng_main.js"></script>
+    <style type="text/css">
+      .epiceditors {
+        border:1px solid #000;
+        box-shadow: rgba(0, 0, 0, 0.75) 0 2px 5px;
+        border-radius: 3px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body data-spy="scroll">
+    <div ng-controller="e2w_setup">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="./index.html">Easy2Wiki</a>
 
-		<script type="text/javascript" src="js/encoder.js"></script>
-		<script type="text/javascript" src="js/wikip_setup_ng_main.js"></script>
-		<style type="text/css">
-			.epiceditors {
-				border:1px solid #000;
-				box-shadow: rgba(0, 0, 0, 0.75) 0 2px 5px;
-				border-radius: 3px;
-				margin-top: 20px;
-			}
-		</style>
-	</head>
-	<body data-spy="scroll">
-		<div ng-controller="wikip_setup">
-			<div class="navbar navbar-inverse navbar-fixed-top">
-				<div class="navbar-inner">
-					<div class="container">
-						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						  <span class="icon-bar"></span>
-						</button>
-						<a class="brand" href="./index.html">Easy2Wiki</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <!-- <li><a href="./.html">About</a></li> -->
+                </li>
+              </ul>
+            </div>
+            
+          </div>
+        </div>
+      </div>
 
-						<div class="nav-collapse collapse">
-							<ul class="nav">
-								<!-- <li><a href="./.html">About</a></li> -->
-								</li>
-							</ul>
-						</div>
-						
-					</div>
-				</div>
-	    </div>
+      <header class="jumbotron subhead" id="overview">
+        <div class="container">
+          <h1>Easy2Wiki Setup</h1>
+          <p class="lead">歡迎來到 Easy2Wiki 的安裝畫面<!-- ，若還有對 Easy2Wiki 的疑問，請參考上方 Easy2Wiki 的<a href="" target="_blank">介紹</a> -->。<br><br>在您啟動這個系統之前，必須完成以下相關設定，設定完成後將在後端建立 config.json、public 目錄檔案，安裝頁面不能再次訪問，若想變更設定可以刪除 config.json、public 目錄檔案再重新啟動 setup.js。</p>
+        </div>
+      </header>
 
-			<header class="jumbotron subhead" id="overview">
-				<div class="container">
-					<h1>Easy2Wiki Setup</h1>
-					<p class="lead">歡迎來到 Easy2Wiki 的安裝畫面<!-- ，若還有對 Easy2Wiki 的疑問，請參考上方 Easy2Wiki 的<a href="" target="_blank">介紹</a> -->。<br><br>在您啟動這個系統之前，必須完成以下相關設定，設定完成後將在後端建立 config.json、public 目錄檔案，安裝頁面不能再次訪問，若想變更設定可以刪除 config.json、public 目錄檔案再重新啟動 setup.js。</p>
-				</div>
-			</header>
+      <div class="container" >
+        <div class="row">
+          <div class="span3" style="float: right;">
+            <div style="margin-top: 30px"><h1>Index</h1></div>
 
-			<div class="container" >
-				<div class="row">
-					<div class="span3" style="float: right;">
-						<div style="margin-top: 30px"><h1>Index</h1></div>
+            <ul class="nav nav-list bs-docs-sidenav">
+              <li>
+                <a href="#db_setting">
+                  Database setting (MySQL) <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25;"></i>
+                </a>
+              </li>
+              <!-- <li>
+                <a href="#cahce_setting">
+                  Cahce setting (Redis) <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25;"></i>
+                </a>
+              </li> -->
+              <li>
+                <a href="#wiki_setting">
+                  Wiki setting <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25;"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#theme_setting">
+                  Theme <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25;"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
 
-						<ul class="nav nav-list bs-docs-sidenav">
-							<li>
-								<a href="#db_setting">
-									Database setting (MySQL) <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25;"></i>
-								</a>
-							</li>
-							<!-- <li>
-								<a href="#cahce_setting">
-									Cahce setting (Redis) <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25;"></i>
-								</a>
-							</li> -->
-							<li>
-								<a href="#wiki_setting">
-									Wiki setting <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25;"></i>
-								</a>
-							</li>
-							<li>
-								<a href="#theme_setting">
-									Theme <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25;"></i>
-								</a>
-							</li>
-						</ul>
-					</div>
+          <div class="span9" style="float: left;">
+            <section id="db_setting">
 
-					<div class="span9" style="float: left;">
-						<section id="db_setting">
+              <div class="page-header">
+                <h1>Database setting (MySQL)</h1>
+                <p class="lead">進行資料庫的相關設定，以進行系統初始化的工作。目前可使用 <a href="http://www.mysql.com/" target="_blank">MySQL</a> 作為後端資料褲管理系統，請先檢查伺服器是否安裝。</p>
+              </div>
 
-							<div class="page-header">
-								<h1>Database setting (MySQL)</h1>
-								<p class="lead">進行資料庫的相關設定，以進行系統初始化的工作。目前可使用 <a href="http://www.mysql.com/" target="_blank">MySQL</a> 作為後端資料褲管理系統，請先檢查伺服器是否安裝。</p>
-							</div>
+              <div class="well">
+                <h4>Database host</h4>
+                <input type="text" value="localhost" ng-model="mysql_host">
 
-							<div class="well">
-								<h4>Database host</h4>
-								<input type="text" value="localhost" ng-model="mysql_host">
+                <h4>Database port</h4>
+                <input type="text" value="3306" ng-model="mysql_port">
 
-								<h4>Database port</h4>
-								<input type="text" value="3306" ng-model="mysql_port">
+                <h4>Database name</h4>
+                <input type="text" value="easy2wiki" ng-model="mysql_dbname">
 
-								<h4>Database name</h4>
-								<input type="text" value="easy2wiki" ng-model="mysql_dbname">
+                <!--<h4>Comment</h4>
+                <input type="text" value="easy2wiki database" ng-model="mysql_dbcommit">-->
 
-								<!--<h4>Comment</h4>
-								<input type="text" value="easy2wiki database" ng-model="mysql_dbcommit">-->
+                <h4>Database username</h4>
+                <input type="text" placeholder="Username" ng-model="mysql_username">
 
-								<h4>Database username</h4>
-								<input type="text" placeholder="Username" ng-model="mysql_username">
+                <h4>Database password</h4>
+                <input type="password" placeholder="Password" ng-model="mysql_password">
 
-								<h4>Database password</h4>
-								<input type="password" placeholder="Password" ng-model="mysql_password">
+                <!--
 
-								<!--
+                <h4>Database engine</h4>
 
-								<h4>Database engine</h4>
+                <div class="btn-group" data-toggle="buttons-radio">
+                  <button type="button" ng-click="mysql_engine = 0" class="btn">InnoDB</button>
+                  <button type="button" ng-click="mysql_engine = 1" class="btn">MyISAM</button>
+                </div>
 
-								<div class="btn-group" data-toggle="buttons-radio">
-									<button type="button" ng-click="mysql_engine = 0" class="btn">InnoDB</button>
-									<button type="button" ng-click="mysql_engine = 1" class="btn">MyISAM</button>
-								</div>
+                <h4>Database encode</h4>
 
-								<h4>Database encode</h4>
+                <div class="btn-group" data-toggle="buttons-radio">
+                  <button type="button" ng-click="mysql_encode = 0" class="btn">binary</button>
+                  <button type="button" ng-click="mysql_encode = 1" class="btn">UTF-8</button>
+                </div>
 
-								<div class="btn-group" data-toggle="buttons-radio">
-									<button type="button" ng-click="mysql_encode = 0" class="btn">binary</button>
-									<button type="button" ng-click="mysql_encode = 1" class="btn">UTF-8</button>
-								</div>
+                -->
 
-								-->
+              </div>
 
-							</div>
+              <hr>
+            </section>
 
-							<hr>
-						</section>
+            <!-- <section id="cahce_setting">
+              <div class="page-header">
+                <h1>Cahce setting (Redis)</h1>
+                <p class="lead">設定啟用 cache system，此系統目前可使用 <a href="http://redis.io/" target="_blank">Redis</a> 這一款 NoSQL database，請先檢查伺服器是否安裝。</p>
+              </div>
 
-						<!-- <section id="cahce_setting">
-							<div class="page-header">
-								<h1>Cahce setting (Redis)</h1>
-								<p class="lead">設定啟用 cache system，此系統目前可使用 <a href="http://redis.io/" target="_blank">Redis</a> 這一款 NoSQL database，請先檢查伺服器是否安裝。</p>
-							</div>
+              <div class="well">
 
-							<div class="well">
+                <h4>host</h4>
+                <input type="text" value="localhost" ng-model="redis_host">
 
-								<h4>host</h4>
-								<input type="text" value="localhost" ng-model="redis_host">
+                <h4>Database port</h4>
+                <input type="text" value="6379" ng-model="redis_port">
+                
+              </div>
+              <hr>
 
-								<h4>Database port</h4>
-								<input type="text" value="6379" ng-model="redis_port">
-								
-							</div>
-							<hr>
+            </section> -->
 
-						</section> -->
+            <section id="wiki_setting">
 
-						<section id="wiki_setting">
+              <div class="page-header">
+                <h1>Wiki setting</h1>
+                <p class="lead">設定此維基的 logo、名稱、編輯權限、管理員帳號、密碼與聯絡方式。</p>
+              </div>
 
-							<div class="page-header">
-								<h1>Wiki setting</h1>
-								<p class="lead">設定此維基的 logo、名稱、編輯權限、管理員帳號、密碼與聯絡方式。</p>
-							</div>
+              <div class="well">
+                <!--<h4>wiki logo (100 x 35)</h4>
+                <input type="file" id="logoFile"> -->
 
-							<div class="well">
-								<!--<h4>wiki logo (100 x 35)</h4>
-								<input type="file" id="logoFile"> -->
+                <h4>wiki name</h4>
+                <input type="text" class="input-xlarge" placeholder="Wiki name" ng-model="wiki_name">
 
-								<h4>wiki name</h4>
-								<input type="text" class="input-xlarge" placeholder="Wiki name" ng-model="wiki_name">
+                <!--<h4>Edit permissions</h4>
+                <div class="btn-group-vertical" data-toggle="buttons-radio">
+                  <button type="button" ng-click="edit_permissions = 1" class="btn">open guest</button>
+                  <button type="button" ng-click="edit_permissions = 2" class="btn">manager only</button>
+                </div> -->
 
-								<!--<h4>Edit permissions</h4>
-								<div class="btn-group-vertical" data-toggle="buttons-radio">
-									<button type="button" ng-click="edit_permissions = 1" class="btn">open guest</button>
-									<button type="button" ng-click="edit_permissions = 2" class="btn">manager only</button>
-								</div> -->
-
-								<h4>Copyright/license medadata</h4>
-								<div class="btn-group-vertical" data-toggle="buttons-radio">
-									<button type="button" ng-click="license = 1" class="btn">Creative Commons — 姓名標示-相同方式分享 3.0 Unported — CC BY-SA 3.0</button>
-									<button type="button" ng-click="license = 2" class="btn">無許可證</button>
-								</div>
+                <h4>Copyright/license medadata</h4>
+                <div class="btn-group-vertical" data-toggle="buttons-radio">
+                  <button type="button" ng-click="license = 1" class="btn">Creative Commons — 姓名標示-相同方式分享 3.0 Unported — CC BY-SA 3.0</button>
+                  <button type="button" ng-click="license = 2" class="btn">無許可證</button>
+                </div>
 
 
-								<h4>Manager username</h4>
-								<input type="text" placeholder="Username" ng-model="manager_username">
+                <h4>Manager username</h4>
+                <input type="text" placeholder="Username" ng-model="manager_username">
 
-								<h4>Manager password</h4>
-								<input type="password" placeholder="Password" ng-model="manager_password">
+                <h4>Manager password</h4>
+                <input type="password" placeholder="Password" ng-model="manager_password">
 
-								<h4>Confirm password</h4>
-								<input type="password" placeholder="Password" ng-model="confirm_password">
+                <h4>Confirm password</h4>
+                <input type="password" placeholder="Password" ng-model="confirm_password">
 
-								<h4>Manager name</h4>
-								<input type="text" placeholder="Username" ng-model="manager_name">
+                <h4>Manager name</h4>
+                <input type="text" placeholder="Username" ng-model="manager_name">
 
-								<!-- <h4>E-mail</h4>
-								<input type="text" class="input-xlarge" placeholder="E-mail" ng-model="manager_email"> -->
-							</div>
+                <!-- <h4>E-mail</h4>
+                <input type="text" class="input-xlarge" placeholder="E-mail" ng-model="manager_email"> -->
+              </div>
 
-							<hr>
+              <hr>
 
-						</section>
-						<section id="theme_setting">
-							<div class="page-header">
-								<h1>Theme</h1>
-								<p class="lead">您可以選定下列作為之後系統顯示的樣式，也可以透過管理員頁面去變更。</p>
-							</div>
-								
-							<ul class="thumbnails">
-								<li class="span3">
-									<div class="thumbnail">
-										<img src="img/default_theme.png" alt="">
-										<h3>Default</h3>
-										<p>default theme.</p>
-									</div>
-								</li>
-							</ul>
+            </section>
+            <section id="theme_setting">
+              <div class="page-header">
+                <h1>Theme</h1>
+                <p class="lead">您可以選定下列作為之後系統顯示的樣式，也可以透過管理員頁面去變更。</p>
+              </div>
+                
+              <ul class="thumbnails">
+                <li class="span3">
+                  <div class="thumbnail">
+                    <img src="img/default_theme.png" alt="">
+                    <h3>Default</h3>
+                    <p>default theme.</p>
+                  </div>
+                </li>
+              </ul>
 
-						</section>
+            </section>
 
-						<button type="button" class="btn btn-primary btn-large" style="width: 100%" ng-click="installCheck()">確定送出</button>
-					</div>
-				</div>
-			</div>
-			
-			<footer class="footer">
-				<div class="container">
-					powered by Easy2Wiki
-				</div>
-			</footer>
-		</div>
-	</body>
+            <button type="button" class="btn btn-primary btn-large" style="width: 100%" ng-click="installCheck()">確定送出</button>
+          </div>
+        </div>
+      </div>
+      
+      <footer class="footer">
+        <div class="container">
+          powered by Easy2Wiki
+        </div>
+      </footer>
+    </div>
+  </body>
 </html>

@@ -1,184 +1,181 @@
 <!doctype html>
-<html ng-app="wikiproject">
-	<head>
-		<meta charset="UTF-8">
-		<title><%= wiki_name %> - Article</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
-		<link href="css/docs.css" rel="stylesheet">
+<html ng-app="easy2wiki">
+  <head>
+    <meta charset="UTF-8">
+    <title><%= wiki_name %> - Article</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="vendor/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/css/bootstrap-responsive.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" rel="stylesheet" />
 
-		<script type="text/javascript" src="js/jquery.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/angular.min.js"></script>
-		<script type="text/javascript" src="js/angular-strap.js"></script>
+    <script type="text/javascript" src="vendor/js/jquery.js"></script>
+    <script type="text/javascript" src="vendor/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/js/angular.min.js"></script>
+    <script type="text/javascript" src="vendor/js/angular-strap.js"></script>
+    <script type="text/javascript" src="vendor/js/moment.min.js"></script>
+    <script type="text/javascript" src="vendor/js/marked.js"></script>
+    <script type="text/javascript" src="js/ng_main.js"></script>
+    <script type="text/javascript" src="js/item_view_ng_main.js"></script>
+  </head>
+  <body data-spy="scroll">
+    <div ng-controller="item_view">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="./index.html"><%= wiki_name %></a>
+            <div class="navbar-text pull-right">
+              <input type="text" ng-model="searchText" class="input-medium search-query" placeholder="Search article..." ng-enter="searchArticle()">
+              <button class="btn" ng-click="searchArticle()" style="margin-top: 0px;"><i class="icon-search"></i></button>
+                 <a href="{{ !managerSession ? '/login.html' : '#' }}">{{ managerSession ? 'manager': 'guest' }}</a>
+                 <a ng-show="managerSession" href="#" ng-click="logout()">logout</a>
+            </div>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./item_list.html">Article</a></li>
+                <li><a href="./category_list.html">Category</a></li>
+                <!-- manager session -->
+                <li ng-show="managerSession" class="">
+                  <a href="./category_new.html">new Category</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-		<script type="text/javascript" src="js/moment.min.js"></script>
-		<script type="text/javascript" src="js/marked.js"></script>
+      <header class="jumbotron subhead" id="overview">
+        <div class="container">
+          <h1>{{ articleName }}</h1>
+          <p class="lead">
+            {{ abstract }}
+          </p>
+        </div>
+      </header>
 
-		<script type="text/javascript" src="js/ng_main.js"></script>
-		<script type="text/javascript" src="js/item_view_ng_main.js"></script>
-		
-	</head>
-	<body data-spy="scroll">
-		<div ng-controller="item_view">
-			<div class="navbar navbar-inverse navbar-fixed-top">
-				<div class="navbar-inner">
-					<div class="container">
-						<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						  <span class="icon-bar"></span>
-						  <span class="icon-bar"></span>
-						  <span class="icon-bar"></span>
-						</button>
-						<a class="brand" href="./index.html"><%= wiki_name %></a>
-						<div class="navbar-text pull-right">
-							<input type="text" ng-model="searchText" class="input-medium search-query" placeholder="Search article..." ng-enter="searchArticle()">
-							<button class="btn" ng-click="searchArticle()" style="margin-top: 0px;"><i class="icon-search"></i></button>
-								 <a href="{{ !managerSession ? '/login.html' : '#' }}">{{ managerSession ? 'manager': 'guest' }}</a>
-								 <a ng-show="managerSession" href="#" ng-click="logout()">logout</a>
-						</div>
-						<div class="nav-collapse collapse">
-							<ul class="nav">
-								<li><a href="./index.html">Home</a></li>
-								<li><a href="./item_list.html">Article</a></li>
-								<li><a href="./category_list.html">Category</a></li>
-								<!-- manager session -->
-								<li ng-show="managerSession" class="">
-									<a href="./category_new.html">new Category</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-	    </div>
+      <div class="container">
+        <div class="row">
+          <div class="span3" style="float: right;">
+            <div style="margin-top: 30px"><h1>{{ items.length > 0 ? "目錄": "" }}</h1></div>
+            <ul class="nav nav-list bs-docs-sidenav">
+              <li ng-repeat="item in items">
+                <a style="cursor: pointer;" ng-click="moveToItem($index)">
+                  <i ng-show="item.type == 1" class="icon-chevron-right"></i>
+                   {{ item.ind }}{{ item.type == 1 ? "-" + item.subInd : ""}}.
+                   <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25; cursor: pointer;"></i>
+                   {{ item.val }}
+                </a>
+              </li>
+            </ul>
+          </div>
 
-	    <header class="jumbotron subhead" id="overview">
-				<div class="container">
-					<h1>{{ articleName }}</h1>
-					<p class="lead">
-						{{ abstract }}
-					</p>
-				</div>
-			</header>
+          <div class="span9" style="float: left;">
+            <section id="content">
 
-			<div class="container">
-				<div class="row">
-					<div class="span3" style="float: right;">
-						<div style="margin-top: 30px"><h1>{{ items.length > 0 ? "目錄": "" }}</h1></div>
-						<ul class="nav nav-list bs-docs-sidenav">
-							<li ng-repeat="item in items">
-								<a style="cursor: pointer;" ng-click="moveToItem($index)">
-									<i ng-show="item.type == 1" class="icon-chevron-right"></i>
-									 {{ item.ind }}{{ item.type == 1 ? "-" + item.subInd : ""}}.
-									 <i class="icon-chevron-right" style="float: right; margin-top: 2px; margin-right: -6px; opacity: .25; cursor: pointer;"></i>
-									 {{ item.val }}
-								</a>
-							</li>
-						</ul>
-					</div>
+              <div ng-if="mrid">
+                <div class="alert alert-info">
+                  <b>本頁面顯示條目的修訂記錄內容。</b>
+                </div>
+              </div>
 
-					<div class="span9" style="float: left;">
-						<section id="content">
+              <div style="text-align: right;">
+                <div class="btn-group">
+                  <button ng-show="mrid" class="btn" ng-click="redirectToPage('item_view.html?aid=' + aid)"><i class="icon-time"></i> 最新內容</button>
+                  <button ng-show="aid && !mrid" class="btn" ng-click="redirectToPage('item_edit.html?aid=' + aid)"><i class="icon-edit"></i> 修改</button>
+                  <button ng-show="aid || mrid" class="btn" ng-click="redirectToPage('item_modify_record.html?aid=' + aid)"><i class="icon-time"></i> 修訂記錄</button>
+                  <button ng-show="aid && mrid" class="btn" ng-click="redirectToPage('item_diff.html?aid=' + aid + '&mrid=' + mrid)"><i class="icon-eye-open"></i> 內容差異</button>
+                  <button ng-show="managerSession && aid && !mrid" class="btn" ng-click="deleteThisArticle()"><i class="icon-trash"></i> 刪除</button>
+                  <button ng-show="managerSession && aid && mrid" class="btn" ng-click="backArticle(aid, mrid)"><i class="icon-repeat"></i> 回復</button>
+                </div>
+              </div>
+              <hr>
 
-							<div ng-if="mrid">
-							  <div class="alert alert-info">
-									<b>本頁面顯示條目的修訂記錄內容。</b>
-  							</div>
-							</div>
+              <!-- article content -->
+              <div id="article_content" ng-html-bind-unsafe="viewHtml"></div>
+              <hr>
 
-							<div style="text-align: right;">
-								<div class="btn-group">
-									<button ng-show="mrid" class="btn" ng-click="redirectToPage('item_view.html?aid=' + aid)"><i class="icon-time"></i> 最新內容</button>
-									<button ng-show="aid && !mrid" class="btn" ng-click="redirectToPage('item_edit.html?aid=' + aid)"><i class="icon-edit"></i> 修改</button>
-									<button ng-show="aid || mrid" class="btn" ng-click="redirectToPage('item_modify_record.html?aid=' + aid)"><i class="icon-time"></i> 修訂記錄</button>
-									<button ng-show="aid && mrid" class="btn" ng-click="redirectToPage('item_diff.html?aid=' + aid + '&mrid=' + mrid)"><i class="icon-eye-open"></i> 內容差異</button>
-									<button ng-show="managerSession && aid && !mrid" class="btn" ng-click="deleteThisArticle()"><i class="icon-trash"></i> 刪除</button>
-									<button ng-show="managerSession && aid && mrid" class="btn" ng-click="backArticle(aid, mrid)"><i class="icon-repeat"></i> 回復</button>
-								</div>
-							</div>
-							<hr>
-
-							<!-- article content -->
-							<div id="article_content" ng-html-bind-unsafe="viewHtml"></div>
-							<hr>
-
-							<div style="text-align: right;">
-								編輯者：{{ modifier }}<br>編輯時間：{{ getTime(timestamp) }}
-								
-							</div>
+              <div style="text-align: right;">
+                編輯者：{{ modifier }}<br>編輯時間：{{ getTime(timestamp) }}
+                
+              </div>
 
 
-							<!-- category -->
-							<div style="margin-top: 20px;">Categorys: 
-								<div class="btn-group">
-									<button ng-repeat="cate in categorys" ng-click="redirectToPage('item_list.html?ctid=' + cate.ctid)" class="btn">
-										<i class="icon-tag"></i> {{ cate.name }}
-									</button>
-								</div>
-							</div>
-							
-							<div ng-show="aid && !mrid">
-								<hr>
-								<!-- discussion input -->
-								<div>
-									<div ng-show="!managerSession">訪客名稱： <input type="text" ng-model="personName" placeholder="訪客名稱"></div>
-									<div ng-show="managerSession">管理者名稱：{{ personName }} </div>
-									<textarea style="width: 100%;" ng-model="disscussContent" placeholder="請輸入討論內容..." ></textarea>
-									<div style="float: right;">
-										<button class="btn btn-success" ng-click="sendDiscuss()">送出</button>
-										<button class="btn btn-danger" ng-click="disscussContent = ''">清除</button>
-									</div>
-									
-									<div style="clear:both;"></div>
-								</div>
+              <!-- category -->
+              <div style="margin-top: 20px;">Categorys: 
+                <div class="btn-group">
+                  <button ng-repeat="cate in categorys" ng-click="redirectToPage('item_list.html?ctid=' + cate.ctid)" class="btn">
+                    <i class="icon-tag"></i> {{ cate.name }}
+                  </button>
+                </div>
+              </div>
+              
+              <div ng-show="aid && !mrid">
+                <hr>
+                <!-- discussion input -->
+                <div>
+                  <div ng-show="!managerSession">訪客名稱： <input type="text" ng-model="personName" placeholder="訪客名稱"></div>
+                  <div ng-show="managerSession">管理者名稱：{{ personName }} </div>
+                  <textarea style="width: 100%;" ng-model="disscussContent" placeholder="請輸入討論內容..." ></textarea>
+                  <div style="float: right;">
+                    <button class="btn btn-success" ng-click="sendDiscuss()">送出</button>
+                    <button class="btn btn-danger" ng-click="disscussContent = ''">清除</button>
+                  </div>
+                  
+                  <div style="clear:both;"></div>
+                </div>
 
-								<hr>
+                <hr>
 
-								<!-- discussion -->
-							
-								<div ng-repeat="discussion in disscussions" class="media">
-									<a class="pull-left" href="">
-										<img class="media-object" data-src="holder.js/64x64">
-									</a>
-									<div class="well" ng-show="discussion.user.gid" class="media-body">
-										<h4 class="media-heading">{{ discussion.user.name }} (Source IP: {{ discussion.user.source_ip }})</h4>
-										
-											{{ discussion.content }}
-										<div style="text-align: right;">
-											{{ getTime(discussion.timestamp) }} 
-											<button ng-show="managerSession" class="btn" ng-click="deleteDiscuss(discussion.adid)"><i class="icon-trash"></i> 刪除</button>
-										</div>
-									</div>
-									<div class="well" ng-show="discussion.user.mid" class="media-body">
-										<h4 class="media-heading">{{ discussion.user.name }} (Manager)</h4>
-										<p>
-											{{ discussion.content }}
-										</p>
-										<div style="text-align: right;">
-											{{ getTime(discussion.timestamp) }}
-											<button ng-show="managerSession" class="btn" ng-click="deleteDiscuss(discussion.adid)"><i class="icon-trash"></i> 刪除</button>
+                <!-- discussion -->
+              
+                <div ng-repeat="discussion in disscussions" class="media">
+                  <a class="pull-left" href="">
+                    <img class="media-object" data-src="holder.js/64x64">
+                  </a>
+                  <div class="well" ng-show="discussion.user.gid" class="media-body">
+                    <h4 class="media-heading">{{ discussion.user.name }} (Source IP: {{ discussion.user.source_ip }})</h4>
+                    
+                      {{ discussion.content }}
+                    <div style="text-align: right;">
+                      {{ getTime(discussion.timestamp) }} 
+                      <button ng-show="managerSession" class="btn" ng-click="deleteDiscuss(discussion.adid)"><i class="icon-trash"></i> 刪除</button>
+                    </div>
+                  </div>
+                  <div class="well" ng-show="discussion.user.mid" class="media-body">
+                    <h4 class="media-heading">{{ discussion.user.name }} (Manager)</h4>
+                    <p>
+                      {{ discussion.content }}
+                    </p>
+                    <div style="text-align: right;">
+                      {{ getTime(discussion.timestamp) }}
+                      <button ng-show="managerSession" class="btn" ng-click="deleteDiscuss(discussion.adid)"><i class="icon-trash"></i> 刪除</button>
 
-										</div>
-									</div>
-								</div>
-								{{ disscussions.length == 0 ? "暫無討論。" : "" }}
-							</div>
-						</section>
+                    </div>
+                  </div>
+                </div>
+                {{ disscussions.length == 0 ? "暫無討論。" : "" }}
+              </div>
+            </section>
 
-					</div>
+          </div>
 
-				</div>
-			</div>
+        </div>
+      </div>
 
-			<footer class="footer">
-				<div class="container">
-					powered by Easy2Wiki<br>
-					<% if (license == 1) { %>
-						<a href="https://creativecommons.org/licenses/by-sa/3.0/tw/">CC-BY-SA</a>
-					<% } %>
-				</div>
-			</footer>
+      <footer class="footer">
+        <div class="container">
+          powered by Easy2Wiki<br>
+          <% if (license == 1) { %>
+            <a href="https://creativecommons.org/licenses/by-sa/3.0/tw/">CC-BY-SA</a>
+          <% } %>
+        </div>
+      </footer>
 
-		</div>
-	</body>
+    </div>
+  </body>
 </html>

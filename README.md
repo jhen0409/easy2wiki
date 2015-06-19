@@ -7,7 +7,7 @@ Easy2Wiki
 
 ```
 npm install
-node setup.js		
+npm run setup
 ```
 
 會打開一個設定頁面，完成設定之後，會產生一個 config.json，並依照設定產生頁面。
@@ -15,7 +15,7 @@ node setup.js
 Start Server: (listening port 3000)
 
 ```
-node app.js		
+npm run start
 ```
 
 接下來可以造訪 [http://localhost:3000](http://localhost:3000) 使用
