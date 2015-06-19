@@ -77,7 +77,7 @@ module.exports = (app, mariaPool) ->
       username = req.body.username
       password = req.body.password
       if username and password and !req.session.manager
-        (err, rows, fields) <- mariaPool.query sql, [escape username, escape password]
+        (err, rows, fields) <- mariaPool.query sql, [escape(username), escape(password)]
         throw err if err
         
         if rows.length
